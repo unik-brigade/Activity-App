@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MCA Activity Portal</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="mobile-frame">
+        <div class="bg-shapes">
+            <div class="blob blob-1"></div>
+            <div class="blob blob-2"></div>
+            <div class="blob blob-3"></div>
+        </div>
+
+        <!-- 1. SPLASH SCREEN -->
+        <div id="splash" class="screen active glass" style="border-radius: 0; border: none; z-index: 100;">
+            <div class="logo-container">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <h1>MCA Activity Portal</h1>
+            <p>Smart Academic Management</p>
+            <div class="spinner"></div>
+        </div>
+
+        <!-- 2. ROLE SELECTION SCREEN -->
+        <div id="role-selection" class="screen">
+            <div class="screen-content">
+                <h1 style="margin-top: 40px;">Welcome</h1>
+                <p>Select your login role to continue</p>
+
+                <div class="role-cards">
+                    <div class="role-card glass" onclick="navTo('student-login')">
+                        <div class="role-icon student-icon">
+                            <i class="fa-solid fa-user-graduate"></i>
+                        </div>
+                        <div class="role-info">
+                            <h3>Student Login</h3>
+                            <p>Access your academic dashboard</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right" style="margin-left: auto; color: var(--text-muted);"></i>
+                    </div>
+
+                    <div class="role-card glass" onclick="navTo('faculty-login')">
+                        <div class="role-icon faculty-icon">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                        </div>
+                        <div class="role-info">
+                            <h3>Faculty Login</h3>
+                            <p>Manage academic activities</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right" style="margin-left: auto; color: var(--text-muted);"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. STUDENT LOGIN SCREEN -->
+        <div id="student-login" class="screen">
+            <div class="top-bar">
+                <div class="back-btn" onclick="navTo('role-selection')"><i class="fa-solid fa-arrow-left"></i></div>
+            </div>
+            <div class="screen-content">
+                <div class="login-header">
+                    <div class="login-illustration">
+                        <i class="fa-solid fa-user-graduate"></i>
+                    </div>
+                    <h2>Student Portal</h2>
+                    <p>Enter your credentials to login</p>
+                </div>
+
+                <div class="glass" style="padding: 24px;">
+                    <div class="login-form">
+                        <div class="input-group">
+                            <i class="fa-regular fa-id-card"></i>
+                            <input type="text" id="student-id-input" class="glass-input" placeholder="Register Number">
+                        </div>
+                        <div class="input-group">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="student-password-input" class="glass-input" placeholder="Password">
+                        </div>
+
+                        <div class="login-options">
+                            <label class="checkbox-container">
+                                <input type="checkbox"> <span>Remember me</span>
+                            </label>
+                            <a href="#" class="forgot-link">Forgot Password?</a>
+                        </div>
+
+                        <div id="student-login-error" style="color: var(--danger); font-size: 12px; display: none; text-align: center; margin-bottom: 10px;">Incorrect Password</div>
+                        <button class="glass-btn" onclick="loginStudent()">Login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. FACULTY LOGIN SCREEN -->
+        <div id="faculty-login" class="screen">
+            <div class="top-bar">
+                <div class="back-btn" onclick="navTo('role-selection')"><i class="fa-solid fa-arrow-left"></i></div>
+            </div>
+            <div class="screen-content">
+                <div class="login-header">
+                    <div class="login-illustration" style="color: var(--secondary);">
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                    </div>
+                    <h2>Faculty Portal</h2>
+                    <p>Admin access for faculty members</p>
+                </div>
+
+                <div class="glass" style="padding: 24px;">
+                    <div class="login-form">
+                        <div class="input-group">
+                            <i class="fa-regular fa-id-badge"></i>
+                            <input type="text" id="faculty-id-input" class="glass-input" placeholder="Faculty ID">
+                        </div>
+                        <div class="input-group">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="faculty-password-input" class="glass-input" placeholder="Password">
+                        </div>
+
+                        <div id="faculty-login-error" style="color: var(--danger); font-size: 12px; display: none; text-align: center; margin-bottom: 10px;">Incorrect Password</div>
+                        <button class="glass-btn" onclick="loginFaculty()"
+                            style="background: linear-gradient(135deg, var(--secondary), var(--primary));">Sign
+                            In</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. STUDENT DASHBOARD SCREEN -->
+        <div id="student-dashboard" class="screen">
+            <div class="screen-content" style="padding-top: 40px;">
+                <div class="dash-header">
+                    <div class="user-info">
+                        <h2>Welcome Back,</h2>
+                        <h2 id="student-name-display" style="color: var(--primary);">Sathish</h2>
+                        <p>MCA Department • 2nd Year</p>
+                    </div>
+                    <div class="avatar" id="student-avatar-display">
+                        S
+                    </div>
+                </div>
+
+                <div class="summary-card glass">
+                    <div class="summary-item">
+                        <span class="summary-value">85%</span>
+                        <span class="summary-label">Attendance</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-value">A</span>
+                        <span class="summary-label">CIA Average</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-value">12</span>
+                        <span class="summary-label">Assignments</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-value" style="font-size: 18px; margin-top: 5px;">15 Oct</span>
+                        <span class="summary-label">Next Exam</span>
+                    </div>
+                </div>
+
+                <h3 class="section-title">Academic Services</h3>
+                <div class="grid-menu glass" style="padding: 15px;">
+                    <div class="menu-item" onclick="navTo('cia-marks')">
+                        <div class="menu-icon"><i class="fa-solid fa-chart-pie"></i></div>
+                        <span>CIA Marks</span>
+                    </div>
+                    <div class="menu-item" onclick="navTo('assignment-status')">
+                        <div class="menu-icon" style="color: var(--subject-dbms);"><i
+                                class="fa-solid fa-file-signature"></i></div>
+                        <span>Assignments</span>
+                    </div>
+                    <div class="menu-item" onclick="navTo('notice-board')">
+                        <div class="menu-icon" style="color: var(--warning);"><i class="fa-solid fa-bullhorn"></i></div>
+                        <span>Notices</span>
+                    </div>
+                    <div class="menu-item" onclick="navTo('time-table')">
+                        <div class="menu-icon" style="color: var(--subject-python);"><i
+                                class="fa-regular fa-calendar-days"></i></div>
+                        <span>Time Table</span>
+                    </div>
+                    <div class="menu-item" onclick="navTo('feedback')">
+                        <div class="menu-icon" style="color: var(--danger);"><i class="fa-regular fa-comment-dots"></i>
+                        </div>
+                        <span>Feedback</span>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-icon" style="color: var(--text-dark);"><i class="fa-regular fa-user"></i></div>
+                        <span>Profile</span>
+                    </div>
+                </div>
+
+                <div class="section-title">
+                    <span>Upcoming Classes</span>
+                    <a href="#" onclick="navTo('time-table')">View All</a>
+                </div>
+                <div class="upcoming-card glass">
+                    <div class="time-block">
+                        <div class="time">10:00</div>
+                        <div class="ampm">AM</div>
+                    </div>
+                    <div class="class-info">
+                        <h4>Cloud Computing</h4>
+                        <p><i class="fa-solid fa-location-dot"></i> Lab 2 • Prof. Ramesh</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom-nav glass" style="border-radius: 35px 35px 0 0; bottom: 0;">
+                <div class="nav-item active" onclick="navTo('student-dashboard')"><i class="fa-solid fa-house"></i><span>Home</span></div>
+                <div class="nav-item" onclick="navTo('notice-board')"><i
+                        class="fa-regular fa-bell"></i><span>Notices</span></div>
+                <div class="nav-item" onclick="navTo('assignment-status')"><i
+                        class="fa-regular fa-file-lines"></i><span>Tasks</span></div>
+                <div class="nav-item" onclick="navTo('feedback')"><i class="fa-regular fa-comment-dots"></i><span>Feedback</span></div>
+            </div>
+        </div>
+
+        <!-- 6. NOTICE BOARD SCREEN -->
+        <div id="notice-board" class="screen">
+            <div class="top-bar">
+                <div class="back-btn" onclick="navTo('student-dashboard')"><i class="fa-solid fa-arrow-left"></i></div>
+                <div class="title">Notice Board</div>
+                <div style="width: 40px;"></div>
+            </div>
+            <div class="screen-content">
+                <div class="search-bar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" class="glass-input" placeholder="Search notices...">
+                </div>
+
+                <div class="filter-chips">
+                    <div class="chip active">All</div>
+                    <div class="chip">Academic</div>
+                    <div class="chip">Exams</div>
+                    <div class="chip">Events</div>
+                    <div class="chip">Placements</div>
+                </div>
+
+                <div class="notice-card glass priority-high">
+                    <div class="notice-header">
+                        <div class="priority-badge">High Priority</div>
+                        <span class="notice-date">Today, 09:30 AM</span>
+                    </div>
+                    <h3 class="notice-title">CIA 2 Examination Schedule</h3>
+                    <p class="notice-desc">The schedule for Continuous Internal Assessment 2 has been released. Exams
+                        will commence from 15th October.</p>
+                    <a href="#"
+                        style="color: var(--primary); font-size: 12px; font-weight: 600; text-decoration: none;">Read
+                        More →</a>
+                </div>
+
+                <div class="notice-card glass">
+                    <div class="notice-header">
+                        <div class="priority-badge" style="background: rgba(59, 130, 246, 0.1); color: var(--primary);">
+                            Academic</div>
+                        <span class="notice-date">Yesterday</span>
+                    </div>
+                    <h3 class="notice-title">Guest Lecture on AI</h3>
+                    <p class="notice-desc">Mandatory guest lecture on Artificial Intelligence and its future scopes by
+                        industry expert tomorrow at Seminar Hall.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. TIME TABLE SCREEN -->
+        <div id="time-table" class="screen">
+            <div class="top-bar">
+                <div class="back-btn" onclick="navTo('student-dashboard')"><i class="fa-solid fa-arrow-left"></i></div>
+                <div class="title">Time Table</div>
+                <div style="width: 40px;"></div>
+            </div>
+            <div class="screen-content">
+                <div class="week-tabs">
+                    <div class="day-tab"><span class="day-name">Mon</span><span class="day-num">12</span></div>
+                    <div class="day-tab"><span class="day-name">Tue</span><span class="day-num">13</span></div>
+                    <div class="day-tab active"><span class="day-name">Wed</span><span class="day-num">14</span></div>
+                    <div class="day-tab"><span class="day-name">Thu</span><span class="day-num">15</span></div>
+                    <div class="day-tab"><span class="day-name">Fri</span><span class="day-num">16</span></div>
+                </div>
+
+                <div class="timeline">
+                    <div class="tt-card glass" style="border-left: 4px solid var(--subject-java);">
+                        <div class="tt-indicator"
+                            style="background: var(--subject-java); box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);">
+                        </div>
+                        <div class="tt-time">09:00<br><span
+                                style="font-size: 10px; color: var(--text-muted); font-weight: 400;">AM</span></div>
+                        <div class="tt-details">
+                            <div class="tt-subject">Java Programming</div>
+                            <div class="tt-faculty">Dr. Senthil Kumar</div>
+                        </div>
+                        <div class="tt-room">Lab 1</div>
+                    </div>
+
+                    <div class="tt-card glass"
+                        style="border-left: 4px solid var(--subject-python); background: rgba(255,255,255,0.7); border-color: var(--secondary);">
+                        <div class="tt-indicator"
+                            style="background: var(--subject-python); box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.2);">
+                        </div>
+                        <div class="tt-time">10:00<br><span
+                                style="font-size: 10px; color: var(--text-muted); font-weight: 400;">AM</span></div>
+                        <div class="tt-details">
+                            <div class="tt-subject">Cloud Computing</div>
+                            <div class="tt-faculty">Prof. Ramesh</div>
+                        </div>
+                        <div class="tt-room">Lab 2</div>
+                    </div>
+
+                    <div class="tt-card glass" style="border-left: 4px solid var(--subject-dbms);">
+                        <div class="tt-indicator"
+                            style="background: var(--subject-dbms); box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2);">
+                        </div>
+                        <div class="tt-time">11:15<br><span
+                                style="font-size: 10px; color: var(--text-muted); font-weight: 400;">AM</span></div>
+                        <div class="tt-details">
+                            <div class="tt-subject">DBMS</div>
+                            <div class="tt-faculty">Dr. Priya</div>
+                        </div>
+                        <div class="tt-room">Room 304</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. CIA MARKS SCREEN -->
+        <div id="cia-marks" class="screen">
+            <div class="top-bar">
+                <div class="back-btn" onclick="navTo('student-dashboard')"><i class="fa-solid fa-arrow-left"></i></div>
+                <div class="title">Performance</div>
+                <div style="width: 40px;"></div>
+            </div>
+            <div class="screen-content">
+                <div class="chart-container glass">
+                    <div class="circular-chart">
+                        <div class="inner-circle">
+                            <h2>78%</h2>
+                            <p>Overall Average</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 20px; font-size: 12px; font-weight: 500;">
+                        <div><span style="color: var(--primary);">●</span> CIA 1: 75%</div>
+                        <div><span style="color: var(--secondary);">●</span> CIA 2: 81%</div>
+                    </div>
+                </div>
+
+                <h3 class="section-title">Subject Wise Marks</h3>
+
+                <div class="mark-card glass">
+                    <div class="mark-header">
+                        <span class="mark-subject">Java Programming</span>
+                        <span class="mark-total">85/100</span>
+                    </div>
+                    <div class="mark-bars">
+                        <div class="mark-bar-row">
+                            <span class="mark-label">CIA 1</span>
+                            <div class="progress-track">
+                                <div class="progress-fill" style="width: 82%; background: var(--primary);"></div>
+                            </div>
+                            <span class="mark-value">41</span>
+                        </div>
+                        <div class="mark-bar-row">
+                            <span class="mark-label">CIA 2</span>
+                            <div class="progress-track">
+                                <div class="progress-fill" style="width: 88%; background: var(--secondary);"></div>
+                            </div>
+                            <span class="mark-value">44</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mark-card glass">
+                    <div class="mark-header">
+                        <span class="mark-subject">Cloud Computing</span>
+                        <span class="mark-total">72/100</span>
+                    </div>
+                    <div class="mark-bars">
+                        <div class="mark-bar-row">
+                            <span class="mark-label">CIA 1</span>
+                            <div class="progress-track">
+                                <div class="progress-fill" style="width: 70%; background: var(--primary);"></div>
+                            </div>
+                            <span class="mark-value">35</span>
+                        </div>
+                        <div class="mark-bar-row">
+                            <span class="mark-label">CIA 2</span>
+                            <div class="progress-track">
+                                <div class="progress-fill" style="width: 74%; background: var(--secondary);"></div>
+                            </div>
+                            <span class="mark-value">37</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. ASSIGNMENT STATUS SCREEN -->
+        <div id="assignment-status" class="screen">
+            <div class="top-bar">
+                <div class="back-btn" onclick="navTo('student-dashboard')"><i class="fa-solid fa-arrow-left"></i></div>
+                <div class="title">Assignments</div>
+                <div style="width: 40px;"></div>
+            </div>
+            <div class="screen-content">
+                <div class="filter-chips">
+                    <div class="chip active">All</div>
+                    <div class="chip">Pending</div>
+                    <div class="chip">Submitted</div>
+                </div>
+
+                <div class="assign-card glass">
+                    <div class="assign-header">
+                        <div>
+                            <div class="assign-sub">Cloud Computing</div>
+                            <div class="assign-title">AWS Infrastructure Setup</div>
+                        </div>
+                        <div class="status-badge status-due">Due Soon</div>
+                    </div>
+                    <div class="assign-footer">
+                        <div class="due-date"><i class="fa-regular fa-clock"></i> Tomorrow, 11:59 PM</div>
+                        <button class="upload-btn"><i class="fa-solid fa-cloud-arrow-up"></i> Upload</button>
+                    </div>
+                </div>
+
+                <div class="assign-card glass">
+                    <div class="assign-header">
+                        <div>
+                            <div class="assign-sub">Artificial Intelligence</div>
+                            <div class="assign-title">Neural Network Model</div>
+                        </div>
+                        <div class="status-badge status-pending">Pending</div>
+                    </div>
+                    <div class="assign-footer">
+                        <div class="due-date"><i class="fa-regular fa-clock"></i> 18 Oct 2026</div>
+                        <button class="upload-btn"><i class="fa-solid fa-cloud-arrow-up"></i> Upload</button>
+                    </div>
+                </div>
+
+                <div class="assign-card glass" style="opacity: 0.8;">
+                    <div class="assign-header">
+                        <div>
+                            <div class="assign-sub">Java Programming</div>
+                            <div class="assign-title">Library Management System</div>
+                        </div>
+                        <div class="status-badge status-submitted">Submitted</div>
+                    </div>
+                    <div class="assign-footer">
+                        <div class="due-date" style="color: var(--success);"><i class="fa-solid fa-check-circle"></i>
+                            Graded: 9.5/10</div>
+                        <button class="upload-btn" style="background: rgba(0,0,0,0.1); color: var(--text-dark);">View
+                            File</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fab"><i class="fa-solid fa-plus"></i></div>
+        </div>
+
+        <!-- 10. FEEDBACK SCREEN -->
+        <div id="feedback" class="screen">
+            <div class="top-bar">
+                <div class="back-btn" onclick="navTo('student-dashboard')"><i class="fa-solid fa-arrow-left"></i></div>
+                <div class="title">Feedback</div>
+                <div style="width: 40px;"></div>
+            </div>
+            <div class="screen-content">
+                <div class="glass" style="padding: 24px; text-align: center;">
+                    <div class="feedback-illustration">📝</div>
+                    <h2>We Value Your Feedback</h2>
+                    <p style="margin-bottom: 24px;">Let us know how we can improve your academic experience.</p>
+
+                    <div class="rating-stars">
+                        <i class="fa-solid fa-star active"></i>
+                        <i class="fa-solid fa-star active"></i>
+                        <i class="fa-solid fa-star active"></i>
+                        <i class="fa-solid fa-star active"></i>
+                        <i class="fa-regular fa-star"></i>
+                    </div>
+
+                    <input type="text" id="fb-name" class="glass-input" placeholder="Your Name" style="margin-bottom: 12px;">
+                    <input type="email" id="fb-email" class="glass-input" placeholder="Your Email" style="margin-bottom: 12px;">
+                    <textarea id="fb-message" class="glass-input feedback-textarea"
+                        placeholder="Write your feedback here..."></textarea>
+
+                    <button id="fb-submit-btn" class="glass-btn" onclick="submitFeedback()">Submit Feedback</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 11. FACULTY DASHBOARD SCREEN -->
+        <div id="faculty-dashboard" class="screen">
+            <div class="screen-content" style="padding-top: 40px;">
+                <div class="dash-header">
+                    <div class="user-info">
+                        <h2>Welcome,</h2>
+                        <h2 id="faculty-name-display" style="color: var(--secondary);">Dr. Senthil</h2>
+                        <p>Faculty • MCA Department</p>
+                    </div>
+                    <div class="avatar" style="background: var(--secondary);">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                </div>
+
+                <div class="summary-card glass faculty-header">
+                    <div class="summary-item">
+                        <span class="summary-value">120</span>
+                        <span class="summary-label">Total Students</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-value">4</span>
+                        <span class="summary-label">Classes Today</span>
+                    </div>
+                    <div
+                        style="grid-column: span 2; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.2);">
+                        <span style="font-size: 12px; font-weight: 500;">Next Class: 10:00 AM (Java Lab)</span>
+                    </div>
+                </div>
+
+                <h3 class="section-title">Management Actions</h3>
+                <div class="grid-menu glass faculty-menu" style="padding: 15px;">
+                    <div class="menu-item">
+                        <div class="menu-icon"><i class="fa-solid fa-bullhorn"></i></div>
+                        <span>Add Notice</span>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-icon"><i class="fa-solid fa-file-pen"></i></div>
+                        <span>Update Marks</span>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-icon"><i class="fa-solid fa-tasks"></i></div>
+                        <span>Assignments</span>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-icon"><i class="fa-solid fa-calendar-alt"></i></div>
+                        <span>Time Table</span>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-icon"><i class="fa-solid fa-chart-line"></i></div>
+                        <span>Performance</span>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-icon"><i class="fa-solid fa-users"></i></div>
+                        <span>Students</span>
+                    </div>
+                </div>
+
+                <div class="section-title">Recent Activity</div>
+                <div class="upcoming-card glass">
+                    <div class="time-block" style="background: rgba(6, 182, 212, 0.1); color: var(--secondary);">
+                        <i class="fa-solid fa-check-circle" style="font-size: 20px;"></i>
+                    </div>
+                    <div class="class-info">
+                        <h4>Marks Updated</h4>
+                        <p>CIA 1 Marks for Java Programming published.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom-nav glass" style="border-radius: 35px 35px 0 0; bottom: 0;">
+                <div class="nav-item active" style="color: var(--secondary); background: rgba(6, 182, 212, 0.1);" onclick="navTo('faculty-dashboard')"><i
+                        class="fa-solid fa-chart-pie"></i><span>Dashboard</span></div>
+                <div class="nav-item" onclick="alert('Student management coming soon!')"><i class="fa-solid fa-users"></i><span>Students</span></div>
+                <div class="nav-item" onclick="navTo('notice-board')"><i class="fa-regular fa-bell"></i><span>Notices</span></div>
+                <div class="nav-item" onclick="navTo('feedback')"><i class="fa-regular fa-comment-dots"></i><span>Feedback</span></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
